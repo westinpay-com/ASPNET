@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Text;
+using System.Web;
+
+namespace PaymentIntegration
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var parameters = new Dictionary<string, string>
+            {
+                { "identifier", "DFU80XZIKS" },
+                { "currency", "USD" },
+                { "amount", "100.00" },
+                { "details", "Purchase T-shirt" },
+                { "ipn_url", "http://example.com/ipn_url.php" },
+                { "cancel_url", "http://example.com/cancel_url.php" },
+                { "success_url", "http://example.com/success_url.php" },
+                { "public_key", "your_public_key" },
+                { "site_logo", "https://westinpay.com/assets/images/logoIcon/logo.png" },
+                { "checkout_theme", "dark" },
+                { "customer_name", "John Doe" },
+                { "customer_email", "john@mail.com" }
+            };
+
+            // Test endpoint
+            string url = "https://westinpay.com/sandbox/payment/initiate";
+
+            // Live endpoint
+            // string url = "https://westinpay.com/payment/initiate";
+
+            var client = new WebClient();
+            var response = client.UploadValues(url, "POST", parameters);
+            var result = Encoding.UTF8.GetString(response);
+
+            // result contains the response back
+            Console.WriteLine(result);
+        }
+    }
+}
